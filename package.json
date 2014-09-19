@@ -1,6 +1,6 @@
 {
   "name": "pactjs",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "Pact for Javascript",
   "dependencies": {
     "debug": "~1.0.4",
@@ -28,9 +28,9 @@
     "supertest": "~0.13.0"
   },
   "files": [
-    "lib/"
+    "src/"
   ],
-  "main": "lib/common",
+  "main": "src/pact",
   "repository": {
     "type": "git",
     "url": "https://github.com/DiUS/pactjs0.git"

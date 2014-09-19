@@ -1,20 +1,24 @@
+var provider = require('../src/app.js');
+var app = provider.app;
+var animalSvc = provider.animalSvc;
+
 var pactTest = {
 
     contract: require('./zoo_app-animal_service.json'),
-    provider: require('../src/app.js'),
+    provider: provider.app,
 
     providerStates: {
         "there is an alligator named Mary":function(provider) {
-            provider.db['Mary'] = { name:"mary", species:"alligator", public:true };
+            animalSvc['Mary'] = { name:"mary", species:"alligator", public:true };
         },
         "there is an alligator named Garry":function(provider) {
-            provider.db['Garry'] = { name:"mary", species:"alligator", public:false };
+            animalSvc['Garry'] = { name:"mary", species:"alligator", public:false };
         },
         "there is not an alligator named Mary":function(provider) {
-            delete provider.db['Mary'];
+            delete animalSvc['Mary'];
         },
         "an error occurs retrieving an alligator":function(provider) {
-            provider.db.findAnimal = function(name) {
+            animalSvc.findAnimal = function(name) {
                 throw new Error('animal not found');
             };
         }

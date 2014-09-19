@@ -3,7 +3,7 @@ var service = (function() {
     require('colors');
     var app = require('express')();
 
-    var db = {
+    var animalSvc = {
         findAnimal: function(name) {
             return this[name];
         }
@@ -12,7 +12,7 @@ var service = (function() {
     app.get('/alligators/:name', function (req, res) {
         try {
             var name = req.params.name;
-            var animal = db.findAnimal(name);
+            var animal = animalSvc.findAnimal(name);
 
             if (!animal) {
                 res.status(404).send();
@@ -36,16 +36,16 @@ var service = (function() {
     return {
         start: start,
         app: app,
-        db: db
+        animalSvc: animalSvc
     };
 })();
 
 
 if(process.argv.indexOf('start') > 0) {
-    service.db['Mary'] = { name:'Mary', comments:'Mild temperament', public:true };
-    service.db['Godzilla'] = { name:'Godzilla', comments:'Extremely large, aggressive', public:true };
-    service.db['David Boon'] = { name:'David Boon', comments:'Has moustache', public:true };
-    service.db['Henry'] = { name:'Henry', comments:'Possibly a crocodile', public:false };
+    service.animalSvc['Mary'] = { name:'Mary', comments:'Mild temperament', public:true };
+    service.animalSvc['Godzilla'] = { name:'Godzilla', comments:'Extremely large, aggressive', public:true };
+    service.animalSvc['David Boon'] = { name:'David Boon', comments:'Has moustache', public:true };
+    service.animalSvc['Henry'] = { name:'Henry', comments:'Possibly a crocodile', public:false };
     service.start();
 }
 

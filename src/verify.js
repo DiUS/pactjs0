@@ -1,3 +1,4 @@
+var log = require('./log')('Pact verifier');
 
 module.exports = (function() {
 
@@ -40,6 +41,7 @@ module.exports = (function() {
                 passedCount ++;
             } else {
                 failedCount ++;
+                log.error(errors[0]);
             }
 
             if(pendingInteractions.length > 0) {
@@ -72,7 +74,7 @@ module.exports = (function() {
         var errors = [];
 
         try {
-            var resp = request(provider.app).get(interaction.request.path).end(function() {
+            var resp = request(provider).get(interaction.request.path).end(function() {
 
                 if (interaction.response.status) {
                     var message = "          has a status code " + interaction.response.status;
