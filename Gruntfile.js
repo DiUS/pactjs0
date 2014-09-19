@@ -1,18 +1,17 @@
 module.exports = function (grunt) {
 
-    var src = ['lib/*.js', 'lib/util/*.js', 'lib/services/*.js', 'lib/test/*.js'];
-    var test = ['test/unit/*.js'];
+    var src = ['src/main/**/*.js'];
+    var test = ['test/unit/**/*.spec.js'];
 
     // configuration
     grunt.initConfig({
-
         jshint: {
             options: {
                 jshintrc: '.jshintrc',
                 ignores: ['test/coverage/**/*.js']
             },
             files: {
-                src: ['lib/*.js', 'lib/util/*.js', 'lib/services/*.js']
+                src: src
             },
             gruntfile: {
                 src: 'Gruntfile.js'
@@ -81,16 +80,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-nodemon');
-    grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-istanbul');
     grunt.loadNpmTasks('grunt-env');
 
 
     // tasks
-    grunt.registerTask('server', ['concurrent:target']);
     grunt.registerTask('default', ['coverage']);
     grunt.registerTask('test', ['mochaTest:unit']);
 
-    grunt.registerTask('coverage', ['jshint', 'clean', 'env:coverage', 'instrument', 'test', 'storeCoverage', 'makeReport']);
+    grunt.registerTask('coverage', ['clean', 'env:coverage', 'instrument', 'test', 'storeCoverage', 'makeReport']);
 
 };
