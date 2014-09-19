@@ -1,0 +1,9 @@
+{
+    "name": "animal-service",
+    "description": "Animal service - For the zoo...",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "express": "4.x"
+    }
+}

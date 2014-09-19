@@ -1,0 +1,44 @@
+{
+  "name": "pactjs",
+  "version": "0.0.1",
+  "description": "Pact for Javascript",
+  "dependencies": {
+    "debug": "~1.0.4",
+    "colors": "~0.6.2",
+    "request": "~2.40.0",
+    "q": "~1.0.1",
+    "express": "4.x"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-uglify": "~0.5.1",
+    "grunt-env": "~0.4.1",
+    "grunt-istanbul": "~0.3.0",
+    "grunt-istanbul-coverage": "0.0.5",
+    "grunt-mocha-test": "~0.11.0",
+    "grunt-nodemon": "~0.3.0",
+    "mocha": "~1.21.4",
+    "mocha-teamcity-cov-reporter": "0.0.1",
+    "chai": "^1.9.1",
+    "sinon": "^1.10.3",
+    "sinon-chai": "^2.5.0",
+    "supertest": "~0.13.0"
+  },
+  "files": [
+    "lib/"
+  ],
+  "main": "lib/common",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/jeffcann/pactjs"
+  },
+  "keywords": [
+    "node",
+    "pact",
+    "javascript"
+  ],
+  "author": "Jeffrey Cann"
+}
