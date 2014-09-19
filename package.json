@@ -33,7 +33,7 @@
   "main": "lib/common",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/jeffcann/pactjs"
+    "url": "https://github.com/DiUS/pactjs0.git"
   },
   "keywords": [
     "node",
