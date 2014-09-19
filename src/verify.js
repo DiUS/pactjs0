@@ -41,7 +41,7 @@ module.exports = (function() {
                 passedCount ++;
             } else {
                 failedCount ++;
-                log.error(errors[0]);
+//                log.error(errors[0]);
             }
 
             if(pendingInteractions.length > 0) {

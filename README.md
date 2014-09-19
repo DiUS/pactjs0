@@ -5,8 +5,15 @@ This is a PoC Pact Javascript implementation.
  
 Currently it is a bare-bones implementation that can verify a provider's response codes.  
 
-Example
+Install
 -------
+
+    npm install pactjs --save-dev
+
+Examples
+--------
+
+Download the full codebase from GitHub.
 
 To run the example provider verifications:
 
