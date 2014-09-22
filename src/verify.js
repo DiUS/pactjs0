@@ -8,11 +8,8 @@ module.exports = (function() {
     // make direct requests on express services
     var request = require('./testing-extensions');
 
-    // assertions libraries
-    var chai = require("chai");
-    var expect = chai.expect;
-
     var providerStates, provider, contract;
+    var verifier = require('./response-verifier');
 
     /**
      * Verify all interactions within a contract
@@ -75,29 +72,7 @@ module.exports = (function() {
 
         try {
             var resp = request(provider).get(interaction.request.path).end(function() {
-
-                if (interaction.response.status) {
-                    var message = "          has a status code " + interaction.response.status;
-                    try {
-                        expect(resp.res.statusCode).to.eq(interaction.response.status);
-                        console.log(message.green);
-                    } catch(err) {
-                        console.log(message.red.bold + (" (expected " + err.expected + ", got " + err.actual + ")").grey);
-                        errors.push(err);
-                    }
-                }
-
-                if (interaction.response.body) {
-                    var message = "          has a matching body";
-                    try {
-                        expect(resp.res.body.toString()).to.eq(interaction.response.body.toString());
-                        console.log(message.green);
-                    } catch(err) {
-                        console.log(message.red.bold + (" (expected " + err.expected + ", got " + err.actual + ")").grey);
-                        errors.push(err);
-                    }
-                }
-
+                var errors = verifier.verify(interaction, resp.res);
                 done(errors);
             });
         } catch(err) {
