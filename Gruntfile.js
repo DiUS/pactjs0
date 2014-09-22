@@ -1,6 +1,6 @@
 module.exports = function (grunt) {
 
-    var src = ['src/main/**/*.js'];
+    var src = ['src/**/*.js'];
     var test = ['test/unit/**/*.spec.js'];
 
     // configuration
@@ -33,7 +33,7 @@ module.exports = function (grunt) {
 
         env: {
             coverage: {
-                APP_DIR_FOR_CODE_COVERAGE: 'test/coverage/instrument/lib'
+                APP_DIR_FOR_CODE_COVERAGE: 'test/coverage/instrument/src'
             }
         },
 
@@ -64,7 +64,7 @@ module.exports = function (grunt) {
         makeReport: {
             src: 'test/coverage/reports/**/*.json',
             options: {
-                type: ['cobertura', 'lcov', 'teamcity'],
+                type: ['cobertura', 'lcov'],
                 dir: 'test/coverage/reports',
                 print: 'detail'
             }

@@ -50,8 +50,12 @@ var isJsonResponse = function(res) {
 /**
  * Mark a unit test as pending
  */
-global.pending = function() {
-    throw new Error("test is pending");
+global.pending = function(done) {
+    console.log("********************************".yellow.bold);
+    console.log("*** Test not implemented yet ***".yellow.bold);
+    console.log("********************************".yellow.bold);
+    done();
+//    throw new Error("test is pending");
 };
 
 module.exports = Supertest;

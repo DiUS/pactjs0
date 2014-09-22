@@ -9,17 +9,17 @@ var pactTest = {
 
     providerStates: {
         "there is an alligator named Mary":function(provider) {
-            animalSvc['Mary'] = { name:"mary", species:"alligator", public:true };
+            animalSvc['Mary'] = { name:"Mary", species:"Alligator", public:true };
         },
         "there is an alligator named Garry":function(provider) {
-            animalSvc['Garry'] = { name:"mary", species:"alligator", public:false };
+            animalSvc['Garry'] = { name:"Garry", species:"Alligator", public:false };
         },
         "there is not an alligator named Mary":function(provider) {
             delete animalSvc['Mary'];
         },
         "an error occurs retrieving an alligator":function(provider) {
             animalSvc.findAnimal = function(name) {
-                throw new Error('animal not found');
+                throw new Error('Animal not found');
             };
         }
     }

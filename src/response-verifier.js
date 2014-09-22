@@ -2,6 +2,7 @@ module.exports = (function() {
 
     var chai = require("chai");
     var expect = chai.expect;
+    var util = require('util');
 
     var verify = function(interaction, response) {
         var errors = [];
@@ -31,7 +32,7 @@ module.exports = (function() {
         if (interaction.response.body) {
             var message = "          has a matching body";
             try {
-                expect(response.body.toString()).to.eq(interaction.response.body.toString());
+                expect(util.inspect(response.body)).to.eq(util.inspect(interaction.response.body));
                 console.log(message.green);
             } catch (err) {
                 console.log(message.red.bold + (" (expected " + err.expected + ", got " + err.actual + ")").grey);

@@ -19,10 +19,10 @@ var service = (function() {
             } else if (animal.public === false) {
                 res.status(403).send();
             } else {
-                res.send(animal);
+                res.send({ name:animal.name });
             }
         } catch(err) {
-            res.status(500).send(err);
+            res.status(500).send({ error:'Argh!!!' });
         }
     });
 
