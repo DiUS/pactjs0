@@ -1,11 +1,11 @@
-var requireHelper = require('../require_helper');
+var requireHelper = require('../../require_helper');
 var chai = require("chai");
 var expect = chai.expect;
 
 describe('Response status code verifier', function() {
 
-    var verifier = requireHelper('./response-verifier');
-    var sample = require('./sample-pact.json');
+    var verifier = requireHelper('./verifier/status-code');
+    var sample = require('./../sample-pact.json');
 
     it('should be able to verify the response codes match', function(done) {
 
@@ -15,7 +15,7 @@ describe('Response status code verifier', function() {
         var errors = [];
 
         // act
-        verifier.verifyResponseStatus(interaction, response, errors);
+        verifier(interaction, response, errors);
 
         // assert
         expect(errors.length).to.eq(0);
@@ -24,13 +24,14 @@ describe('Response status code verifier', function() {
     });
 
     it('should add an error when the response codes do not match', function(done) {
+
         // arrange
         var interaction = sample.interactions[0];
         var response = { statusCode:404 };
         var errors = [];
 
         // act
-        verifier.verifyResponseStatus(interaction, response, errors);
+        verifier(interaction, response, errors);
 
         // assert
         expect(errors.length).to.eq(1);

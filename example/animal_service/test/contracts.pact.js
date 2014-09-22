@@ -11,7 +11,7 @@ var pactTest = {
         "there is an alligator named Mary":function(provider) {
             animalSvc['Mary'] = { name:"Mary", species:"Alligator", public:true };
         },
-        "there is an alligator named Garry":function(provider) {
+        "there is a private alligator named Garry":function(provider) {
             animalSvc['Garry'] = { name:"Garry", species:"Alligator", public:false };
         },
         "there is not an alligator named Mary":function(provider) {

@@ -19,7 +19,7 @@
       "response": {
         "status": 200,
         "headers": {
-          "Content-Type": "application/json;charset=utf-8"
+          "content-type": "application/json; charset=utf-8"
         },
         "body": {
           "name": "Mary"
@@ -27,8 +27,8 @@
       }
     },
     {
-      "description": "a request for an alligator",
-      "provider_state": "there is an alligator named Garry",
+      "description": "an unauthorised request for an alligator",
+      "provider_state": "there is a private alligator named Garry",
       "request": {
         "method": "get",
         "path": "/alligators/Garry",
@@ -67,7 +67,7 @@
       "response": {
         "status": 500,
         "headers": {
-          "Content-Type": "application/json;charset=utf-8"
+          "content-type": "application/json; charset=utf-8"
         },
         "body": {
           "error": "Argh!!!"

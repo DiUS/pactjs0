@@ -1,12 +1,12 @@
-var requireHelper = require('../require_helper');
+var requireHelper = require('../../require_helper');
 var chai = require("chai");
 var expect = chai.expect;
-var supertest = require('../../src/testing-extensions');
+require('../../../src/testing-extensions');
 
 describe('Response body verifier', function() {
 
-    var verifier = requireHelper('./response-verifier');
-    var sample = require('./sample-pact.json');
+    var verifier = requireHelper('./verifier/body');
+    var sample = require('./../sample-pact.json');
 
     it('should be able to verify the body contains the required data', function(done) {
 
@@ -16,7 +16,7 @@ describe('Response body verifier', function() {
         var errors = [];
 
         // act
-        verifier.verifyResponseBody(interaction, response, errors);
+        verifier(interaction, response, errors);
 
         // assert
         expect(errors.length).to.eq(0);
@@ -47,7 +47,7 @@ describe('Response body verifier', function() {
         var errors = [];
 
         // act
-        verifier.verifyResponseBody(interaction, response, errors);
+        verifier(interaction, response, errors);
 
         // assert
         expect(errors.length).to.eq(1);
