@@ -11,9 +11,9 @@ module.exports = (function() {
     };
 
     var verifiers = [
-        require('./verifier/body'),
-        require('./verifier/status-code'),
-        require('./verifier/header')
+        require('./body'),
+        require('./status-code'),
+        require('./header')
     ];
 
     return {

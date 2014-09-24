@@ -8,8 +8,11 @@ module.exports = (function() {
     // make direct requests on express services
     var request = require('./testing-extensions');
 
+    // pact response verifier
+    var verifier = require('./verifier/response');
+    var stateManager = require('./provider-state-manager');
+
     var providerStates, provider, contract;
-    var verifier = require('./response-verifier');
 
     /**
      * Verify all interactions within a contract
@@ -31,6 +34,10 @@ module.exports = (function() {
         var passedCount = 0;
         var failedCount = 0;
 
+        // before all
+        stateManager.verify(contract.interactions, providerStates);
+
+        // synchronously iterate through all interactions
         var interactionDone = function(errors) {
             completedInteractions.push(nextInteraction);
 
@@ -38,7 +45,6 @@ module.exports = (function() {
                 passedCount ++;
             } else {
                 failedCount ++;
-//                log.error(errors[0]);
             }
 
             if(pendingInteractions.length > 0) {
@@ -61,7 +67,7 @@ module.exports = (function() {
 
     var verifyInteraction = function(interaction, done) {
 
-        setupProviderStateForInteraction(interaction);
+        stateManager.setup(provider, interaction, providerStates);
 
         console.log("  Given " + interaction.provider_state);
         console.log("    " + interaction.description);
@@ -81,12 +87,8 @@ module.exports = (function() {
         }
     };
 
-    var setupProviderStateForInteraction = function( interaction) {
-        providerStates[interaction.provider_state](provider);
-    };
-
     return {
-        verify: verifyInteractions
+        verify: verifyInteractions,
+        verifyInteraction: verifyInteraction
     }
 })();
-

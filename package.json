@@ -1,6 +1,6 @@
 {
   "name": "pactjs",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Pact for Javascript",
   "dependencies": {
     "debug": "~1.0.4",
