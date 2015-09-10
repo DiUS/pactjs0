@@ -18,8 +18,9 @@ module.exports = (function() {
      * Verify all interactions within a contract
      *
      * @param pactTest must contain the contract, an instance of the provider, and a map of the initial provider states.
+     * @param done callback function will be passed an array of errors occurring during the verification.
      */
-    var verifyInteractions = function(pactTest) {
+    var verifyInteractions = function(pactTest, done) {
         contract = pactTest.contract;
         provider = pactTest.provider;
         providerStates = pactTest.providerStates;
@@ -33,6 +34,7 @@ module.exports = (function() {
 
         var passedCount = 0;
         var failedCount = 0;
+        var allErrors = [];
 
         // before all
         stateManager.verify(contract.interactions, providerStates);
@@ -44,6 +46,7 @@ module.exports = (function() {
             if(errors.length === 0) {
                 passedCount ++;
             } else {
+                allErrors = allErrors.concat(errors);
                 failedCount ++;
             }
 
@@ -58,6 +61,7 @@ module.exports = (function() {
                 console.log("  " + (""+passedCount).green.bold + " passed, " + (""+failedCount).red.bold + " failed.");
                 console.log("  Took " + seconds + " seconds");
                 console.log("---------------------------------------------------------------");
+                done(allErrors);
             }
         };
 
