@@ -24,20 +24,20 @@ describe('Response body verifier', function() {
         done();
     });
 
-//    it('should be able to verify the body contains at least required data', function(done) {
-//        // arrange
-//        var interaction = sample.interactions[0];
-//        var response = { statusCode:200, body: { name:"Mary", species:"Alligator", colour:"Browny green" } };
-//        var errors = [];
-//
-//        // act
-//        verifier.verifyResponseBody(interaction, response, errors);
-//
-//        // assert
-//        expect(errors.length).to.eq(0);
-//
-//        done();
-//    });
+    it('should be able to verify the body contains at least required data', function(done) {
+        // arrange
+        var interaction = sample.interactions[0];
+        var response = { statusCode:200, body: { name:"Mary", species:"Alligator", colour:"Browny green" } };
+        var errors = [];
+
+        // act
+        verifier(interaction, response, errors);
+
+        // assert
+        expect(errors.length).to.eq(0);
+
+        done();
+    });
 
     it('should raise an error when the response does not contain the expected data', function(done) {
 
