@@ -80,15 +80,35 @@ module.exports = (function() {
 
         var errors = [];
 
-        try {
-            var resp = request(provider).get(interaction.request.path).end(function() {
-                var errors = verifier.verify(interaction, resp.res);
-                done(errors);
+        if(interaction.request.method === "post"){
+          try {
+            var resp = request(provider).post(interaction.request.path)
+              .send(interaction.request.body)
+              .end(function()
+            {
+              var errors = verifier.verify(interaction, resp.res);
+              done(errors);
             });
-        } catch(err) {
+
+          } catch(err) {
             errors.push(err);
             done(errors);
+          }
+
+        } else if(interaction.request.method === "get"){
+          try {
+          var resp = request(provider).get(interaction.request.path).end(function()
+          {
+            var errors = verifier.verify(interaction, resp.res);
+            done(errors);
+          });
+          } catch(err) {
+            errors.push(err);
+            done(errors);
+          }
         }
+
+
     };
 
     return {

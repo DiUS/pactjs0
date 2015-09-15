@@ -1,20 +1,21 @@
-var chai = require("chai");
-var expect = chai.expect;
-var _ = require('congruence');
-
-
+var deepDiff = require('deep-diff').observableDiff;
 /**
  * TODO Allow unexpected keys to be sent back in the body. See "Pact Specificaton Philosophy" in main README
  */
 module.exports = function(interaction, response, errors) {
     if (interaction.response.body) {
         var message = "          has a matching body";
-        try {
-            expect(_.similar(interaction.response.body, response.body)).to.equal(true);
-            console.log(message.green);
-        } catch (err) {
-            console.log(message.red.bold + (" (expected " + err.expected + ", got " + err.actual + ")").grey);
-            errors.push(err);
+
+      deepDiff(interaction.response.body, response.body, function(diff) {
+        if(diff.kind !== 'N') {
+          errors.push({actual: diff.lhs, expected: diff.rhs })
         }
+
+      });
+      if(errors.length > 0) {
+        console.log(message.red.bold + (JSON.stringify(errors)).grey);
+      } else {
+        console.log(message.green);
+      }
     }
 };
