@@ -29,6 +29,28 @@ describe('Response header verifier', function() {
         done();
     });
 
+    it('should normalise the header value', function(done) {
+
+        // arrange
+        var interaction = sample.interactions[0];
+        var response = {
+            statusCode:200,
+            headers: {
+                "content-type": "application/json;charset=utf-8",
+                "X-something-else": "123"
+            }
+        };
+        var errors = [];
+
+        // act
+        verifier(interaction, response, errors);
+
+        // assert
+        expect(errors.length).to.eq(0);
+
+        done();
+    });
+
     it('should add an error when the response contains a header that does not match', function(done) {
 
         // arrange
