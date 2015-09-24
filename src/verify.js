@@ -96,12 +96,16 @@ module.exports = (function() {
           }
 
         } else if(interaction.request.method === "get"){
-          try {
-          var resp = request(provider).get(interaction.request.path).end(function()
+          try
           {
-            var errors = verifier.verify(interaction, resp.res);
-            done(errors);
-          });
+            var path = (interaction.request.query === null) ? interaction.request.path :
+              interaction.request.path + "?" + interaction.request.query;
+
+            var resp = request(provider).get(path).end(function()
+            {
+              var errors = verifier.verify(interaction, resp.res);
+              done(errors);
+            });
           } catch(err) {
             errors.push(err);
             done(errors);
