@@ -3,6 +3,7 @@
   "version": "0.0.6",
   "description": "Pact for Javascript",
   "dependencies": {
+    "supertest": "~0.13.0",
     "colors": "~0.6.2",
     "congruence": "^1.6.11",
     "debug": "~1.0.4",
@@ -26,8 +27,7 @@
     "mocha-teamcity-cov-reporter": "0.0.1",
     "chai": "^1.9.1",
     "sinon": "^1.10.3",
-    "sinon-chai": "^2.5.0",
-    "supertest": "~0.13.0"
+    "sinon-chai": "^2.5.0"
   },
   "files": [
     "src/"
