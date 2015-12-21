@@ -1,6 +1,6 @@
 {
   "name": "pactjs",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Pact for Javascript",
   "dependencies": {
     "supertest": "~0.13.0",
