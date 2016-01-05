@@ -51,6 +51,7 @@ describe('Response body verifier', function() {
 
         // assert
         expect(errors.length).to.eq(1);
+        expect(errors[0]).to.deep.eq({ actual: 'Mariann', expected: 'Mary' });
 
         done();
     });
