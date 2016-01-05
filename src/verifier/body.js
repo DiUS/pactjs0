@@ -8,12 +8,12 @@ module.exports = function(interaction, response, errors) {
 
       deepDiff(interaction.response.body, response.body, function(diff) {
         if(diff.kind !== 'N') {
-          errors.push({actual: diff.lhs, expected: diff.rhs })
+          errors.push({actual: diff.rhs, expected: diff.lhs })
         }
 
       });
       if(errors.length > 0) {
-        console.log(message.red.bold + (JSON.stringify(errors)).grey);
+        console.log(message.red + (JSON.stringify(errors)).grey);
       } else {
         console.log(message.green);
       }
