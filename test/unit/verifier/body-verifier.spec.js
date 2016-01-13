@@ -1,7 +1,6 @@
 var requireHelper = require('../../require_helper');
 var chai = require("chai");
 var expect = chai.expect;
-require('../../../src/testing-extensions');
 
 describe('Response body verifier', function() {
 
