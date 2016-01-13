@@ -1,18 +1,19 @@
 var log = require('./log')('Pact verifier');
+var request = require('request');
+var _ = require('lodash');
 
-module.exports = (function() {
+module.exports = function() {
 
     // adds colours to strings
     require('colors');
 
-    // make direct requests on express services
-    var request = require('./testing-extensions');
-
     // pact response verifier
     var verifier = require('./verifier/response');
-    var stateManager = require('./provider-state-manager');
-
+    var stateManager = require('./provider-state-manager')();
+    var webserver = require('./webserver-handling');
     var providerStates, provider, contract;
+    var app;
+    var httpServer;
 
     /**
      * Verify all interactions within a contract
@@ -21,8 +22,11 @@ module.exports = (function() {
      * @param done callback function will be passed an array of errors occurring during the verification.
      */
     var verifyInteractions = function(pactTest, done) {
-        contract = pactTest.contract;
-        provider = pactTest.provider;
+
+        //Create a copy, because the implemenation mutates the pact data as it goes along
+        contract = _.cloneDeep(pactTest.contract);
+        app = pactTest.provider;
+
         providerStates = pactTest.providerStates;
 
         var startTime = Date.now();
@@ -36,8 +40,18 @@ module.exports = (function() {
         var failedCount = 0;
         var allErrors = [];
 
-        // before all
-        stateManager.verify(contract.interactions, providerStates);
+        webserver.setup(pactTest.provider, function(err, server){
+            if(err){
+                throw {
+                    message: "Fatal error: Unable to setup webserver for Pact test",
+                    err: err
+                };
+            }
+            else{
+                httpServer = server;
+                stateManager.verify(contract.interactions, providerStates);
+            }
+        });
 
         // synchronously iterate through all interactions
         var interactionDone = function(errors) {
@@ -61,7 +75,17 @@ module.exports = (function() {
                 console.log("  " + (""+passedCount).green.bold + " passed, " + (""+failedCount).red.bold + " failed.");
                 console.log("  Took " + seconds + " seconds");
                 console.log("---------------------------------------------------------------");
-                done(allErrors);
+                webserver.teardown(function(err){
+                    if(err){
+                        throw {
+                            message: "Unable to teardown webserver",
+                            err: err
+                        };
+                    }
+                    else {
+                        done(allErrors);
+                    }
+                });
             }
         };
 
@@ -80,43 +104,35 @@ module.exports = (function() {
 
         var errors = [];
 
-        if(interaction.request.method === "post"){
-          try {
-            var resp = request(provider).post(interaction.request.path)
-              .send(interaction.request.body)
-              .end(function()
-            {
-              var errors = verifier.verify(interaction, resp.res);
-              done(errors);
+        try {
+            var path = (interaction.request.query === undefined) ? interaction.request.path :
+                    interaction.request.path + "?" + interaction.request.query;
+
+            var options = {
+                url: "http://localhost:3000" + path,
+                headers: interaction.request.headers ? interaction.request.headers : {},
+                body: interaction.request.body,
+                method: interaction.request.method,
+                json: true
+            };
+
+            request(options, function(err, res, body){
+                if(err){
+                    console.error('Error in making request: ', options, err);
+                    done(err);
+                }
+                done(verifier.verify(interaction, res));
             });
-
-          } catch(err) {
-            errors.push(err);
-            done(errors);
-          }
-
-        } else if(interaction.request.method === "get"){
-          try
-          {
-            var path = (interaction.request.query === null) ? interaction.request.path :
-              interaction.request.path + "?" + interaction.request.query;
-
-            var resp = request(provider).get(path).end(function()
-            {
-              var errors = verifier.verify(interaction, resp.res);
-              done(errors);
-            });
-          } catch(err) {
-            errors.push(err);
-            done(errors);
-          }
         }
-
-
+        catch(err) {
+            console.error('caught error in sending request: ', err.stack, err);
+            errors.push(err);
+            done(errors);
+        }
     };
 
     return {
         verify: verifyInteractions,
         verifyInteraction: verifyInteraction
-    }
-})();
+    };
+};
