@@ -1,0 +1,29 @@
+{
+    "interactions": [
+        {
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application\/json"
+                },
+                "body": {
+                    "foo": "baz"
+                }
+            },
+            "request": {
+                "path": "\/resource\/1234",
+                "method": "GET",
+                "headers": {
+                    "Authenticated-User": "test"
+                }
+            },
+            "description": "there is a resource at /1234"
+        }
+    ],
+    "provider": {
+        "name": "some resource API"
+    },
+    "consumer": {
+        "name": "some consumer"
+    }
+}

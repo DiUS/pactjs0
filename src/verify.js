@@ -97,8 +97,8 @@ module.exports = function() {
 
         stateManager.setup(provider, interaction, providerStates);
 
-        console.log("  Given " + interaction.provider_state);
-        console.log("    " + interaction.description);
+        console.log("  Given " + (interaction.provider_state || 'there is no provider state in the interaction'));
+        console.log("    And " + (interaction.description || 'no description of the state in the interaction'));
         console.log("      with " + interaction.request.method.toUpperCase() + " " + interaction.request.path);
         console.log("        returns a response which");
 
