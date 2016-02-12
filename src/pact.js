@@ -1,4 +1,5 @@
-module.exports = {
-    verify: require('./verify').verify
+module.exports = function() {
+    return {
+        verify: require('./verify')().verify
+    };
 };
-
