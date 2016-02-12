@@ -5,7 +5,7 @@ This is a PoC Pact Javascript implementation.
  
 Currently it is a bare-bones implementation that can verify a provider's response.
 
-__*NOTE: This is being supersede by a work in progress at https://github.com/DiUS/pact-js-provider*__ 
+## __*NOTE: This is being superseded by a work in progress at https://github.com/DiUS/pact-js-provider*__ 
 
 Install
 -------
